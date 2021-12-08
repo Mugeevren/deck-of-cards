@@ -8,6 +8,9 @@ func main() {
 	//printState();
 
 	cards := newDeck()
-	cards = append(cards, "Six of Spades")
-	deck.print(cards)
+
+	hand, remainingDeck := deal(cards, 5)
+
+	hand.print()
+	remainingDeck.print()
 }
