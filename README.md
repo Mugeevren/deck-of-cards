@@ -3,3 +3,7 @@ golang playground for personal use
 
 # run the code
 go run main.go deck.go
+
+
+# run the tests
+go test
