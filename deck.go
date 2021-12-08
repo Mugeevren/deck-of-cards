@@ -1,6 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"io/ioutil"
+	"os"
+	"strings"
+)
 
 //Create a new type of 'deck'
 //which is a slice of string
@@ -24,6 +29,8 @@ func newDeck() deck {
 }
 
 //***Unusual Naming Convention*****
+//I know these single letter variables are really the best thing in the world
+//Iknow they get confusing very quickly, but again this is really convention in go language.
 // usually reference with a one or two letter shortened version of the receiver argument
 // unlike any other languages, to use a one or two letter to define a variable is ok for go
 // instead of d we could use 'this' or 'self' and define the function like below,
@@ -55,7 +62,35 @@ func deal(d deck, handSize int) (deck, deck) {
 	return d[:handSize], d[handSize:]
 }
 
-//check
-// func (d deck) deal(handSize int) deck {
-
+//this works as well, we should call it like -->  cards.deal(5)
+// func (d deck) deal(handSize int) (deck, deck) {
+// 	return d[:handSize], d[handSize:]
 // }
+
+//****Type Convertion in Go****
+//[]byte("Hi there!")
+
+func (d deck) toString() string {
+	return strings.Join([]string(d), ",")
+}
+
+//func WriteFile(filename string, data []byte, perm fs.FileMode) error
+func (d deck) saveToFile(filename string) error {
+	return ioutil.WriteFile(filename, []byte(d.toString()), 0666)
+}
+
+//func ReadFile(filename string) ([]byte, error)
+//err is the value of type error, If nothing went wrong, It will have a value of 'nil'
+//'nil' is a value in go, which essentially means no value
+//Error handling with go is kind of a tricky beast
+func newDeckFromFile(filename string) deck {
+	bs, err := ioutil.ReadFile(filename)
+	if err != nil {
+		//#option 1 - log the error and return a call to newDeck()
+		//#option 2 - log the error and entirely quit program
+		fmt.Println("Error: ", err)
+		os.Exit(1)
+	}
+	s := strings.Split(string(bs), ",")
+	return deck(s)
+}

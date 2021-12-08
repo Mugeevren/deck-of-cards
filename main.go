@@ -7,10 +7,15 @@ func main() {
 	// fmt.Println(card)
 	//printState();
 
-	cards := newDeck()
+	// cards := newDeck()
+	// hand, remainingDeck := deal(cards, 5)
+	// hand.print()
+	// remainingDeck.print()
 
-	hand, remainingDeck := deal(cards, 5)
+	// cards := newDeck()
+	// cards.saveToFile("my_cards")
 
-	hand.print()
-	remainingDeck.print()
+	cards := newDeckFromFile("my_cards")
+	cards.print()
+
 }
