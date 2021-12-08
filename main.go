@@ -7,11 +7,7 @@ func main() {
 	// fmt.Println(card)
 	//printState();
 
-	cards := deck{"Ace of Diamonds", newCard()}
+	cards := newDeck()
 	cards = append(cards, "Six of Spades")
 	deck.print(cards)
-}
-
-func newCard() string {
-	return "Five of Diamond"
 }
